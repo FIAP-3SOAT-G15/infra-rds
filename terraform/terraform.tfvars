@@ -1,4 +1,4 @@
-region = "sa-east-1"
+region = "us-east-1"
 
 tags = {
   managed_by_terraform = true
