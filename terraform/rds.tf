@@ -4,7 +4,7 @@ resource "aws_db_instance" "default" {
   identifier                  = "selfordermanagement"
   engine                      = "postgres"
   engine_version              = "15.6"
-  instance_class              = "db.t2.micro"
+  instance_class              = "db.t3.micro"
   parameter_group_name        = "default.postgres15"
 
   username                    = "master"
