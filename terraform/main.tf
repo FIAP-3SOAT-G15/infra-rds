@@ -79,7 +79,7 @@ resource "aws_iam_policy" "rds_params_read_only_policy" {
   name = "TechChallengeRDSParamsReadOnlyPolicy"
 
   policy = jsonencode({
-    Version = "2022-10-17"
+    Version = "2012-10-17"
     Statement = [
       {
         Effect = "Allow"
