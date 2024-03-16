@@ -1,5 +1,7 @@
 locals {
-  name = "selfordermanagementdb"
+  name     = "selfordermanagementdb"
+  username = "master"
+  port     = 5432
 }
 
 data "terraform_remote_state" "tech-challenge" {
@@ -30,8 +32,8 @@ module "db" {
   storage_encrypted = false
 
   db_name  = local.name
-  username = "master"
-  port     = 5432
+  username = local.username
+  port     = local.port
 
   manage_master_user_password = true
 
@@ -59,4 +61,15 @@ module "security_group" {
       cidr_blocks = data.terraform_remote_state.tech-challenge.outputs.vpc_cidr_block
     },
   ]
+}
+
+module "ssm_parameters" {
+  source = "terraform-aws-modules/ssm-parameter/aws"
+  name   = "live/selfordermanagement/db"
+  type   = "String"
+  value = jsonencode({
+    name : local.name,
+    host : module.db.db_instance_endpoint,
+    port : local.port
+  })
 }
