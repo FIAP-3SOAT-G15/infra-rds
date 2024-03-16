@@ -55,21 +55,39 @@ module "security_group" {
 
   ingress_with_cidr_blocks = [
     {
-      from_port   = 5432
-      to_port     = 5432
+      from_port   = local.port
+      to_port     = local.port
       protocol    = "tcp"
       cidr_blocks = data.terraform_remote_state.tech-challenge.outputs.vpc_cidr_block
     },
   ]
 }
 
-module "ssm_parameters" {
+module "rds_params" {
   source = "terraform-aws-modules/ssm-parameter/aws"
   name   = "/live/selfordermanagement/db"
   type   = "String"
+
   value = jsonencode({
     name : local.name,
     endpoint : module.db.db_instance_endpoint,
     port : local.port
+  })
+}
+
+resource "aws_iam_policy" "rds_params_read_only_policy" {
+  name = "TechChallengeRDSParamsReadOnlyPolicy"
+
+  policy = jsonencode({
+    Version = "2022-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ssm:GetParameters"
+        ],
+        Resource = module.rds_params.ssm_parameter_arn
+      }
+    ]
   })
 }
