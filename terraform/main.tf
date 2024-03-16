@@ -69,7 +69,7 @@ module "ssm_parameters" {
   type   = "String"
   value = jsonencode({
     name : local.name,
-    host : module.db.db_instance_endpoint,
+    endpoint : module.db.db_instance_endpoint,
     port : local.port
   })
 }
