@@ -65,7 +65,7 @@ module "security_group" {
 
 module "ssm_parameters" {
   source = "terraform-aws-modules/ssm-parameter/aws"
-  name   = "live/selfordermanagement/db"
+  name   = "/live/selfordermanagement/db"
   type   = "String"
   value = jsonencode({
     name : local.name,
