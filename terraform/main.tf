@@ -75,6 +75,24 @@ module "rds_params" {
   })
 }
 
+resource "aws_iam_policy" "rds_secrets_read_only_policy" {
+  name = "TechChallengeRDSSecretsReadOnlyPolicy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:DescribeSecret",
+          "secretsmanager:GetSecretValue"
+        ],
+        Resource = module.db.db_instance_master_user_secret_arn
+      }
+    ]
+  })
+}
+
 resource "aws_iam_policy" "rds_params_read_only_policy" {
   name = "TechChallengeRDSParamsReadOnlyPolicy"
 

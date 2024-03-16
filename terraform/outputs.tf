@@ -3,6 +3,11 @@ output "db_instance_master_user_secret_arn" {
   value       = module.db.db_instance_master_user_secret_arn
 }
 
+output "rds_secrets_read_only_policy_arn" {
+  description = "The ARN of the RDS secrets"
+  value       = aws_iam_policy.rds_secrets_read_only_policy.arn
+}
+
 output "rds_params_read_only_policy_arn" {
   description = "The ARN of the RDS params"
   value       = aws_iam_policy.rds_params_read_only_policy.arn
