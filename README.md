@@ -1,4 +1,4 @@
-# FIAP 3SOAT Tech Challenge - G15 - RDS
+# IaC for RDS
 
 IaC provisionada de RDS for Postgres na AWS com Terraform.
 
