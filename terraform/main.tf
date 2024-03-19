@@ -102,6 +102,7 @@ resource "aws_iam_policy" "rds_params_read_only_policy" {
       {
         Effect = "Allow"
         Action = [
+          "ssm:GetParameter",
           "ssm:GetParameters"
         ],
         Resource = module.rds_params.ssm_parameter_arn
